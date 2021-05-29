@@ -15,7 +15,7 @@ int main()
 
 	Event event;
 	Music music;
-	if (!music.openFromFile("Muzyka_iz_tetrisa.ogg"))
+	if (!music.openFromFile("Resources/Muzyka_iz_tetrisa.ogg"))
 		return -1;
 	music.setLoop(true);
 	music.play();
@@ -86,6 +86,6 @@ int main()
 		}
 		tet_game.breaking_lines();
 	}
-	Sleep(1500);
+	Sleep(1000);
 return 0;
 }

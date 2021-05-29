@@ -12,7 +12,6 @@ protected:
 	RectangleShape game_shape;
 	RectangleShape stats_shape;
 	Sprite sprite;
-	//IntRect tetramino;
 public:
 	static Game& getInstance() {
 		static Game instance;

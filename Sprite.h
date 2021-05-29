@@ -33,7 +33,6 @@ public:
 	Sprite sprite;
 	IntRect tetramino;
 	Sprite_type tetramino_type;
-	//using coords = std::pair <t_Point, IntRect>;
 	void Draw(RenderWindow& window);
 	void Move(Direction direction);
 	void Move_Down();
