@@ -24,8 +24,8 @@ t_Sprite::t_Sprite(t_Sprite::Sprite_type type, Texture &texture, int x, int y, i
 
 	for (int i = 0; i < 4; i++)
 	{
-		coord[i].x = 200 + tetramino.width * (figures[tetramino_type][i] % 2);
-		coord[i].y = tetramino.height * (figures[tetramino_type][i] / 2); 0;
+		coord[i].x = 18 * 10 + tetramino.width * (figures[tetramino_type][i] % 2);
+		coord[i].y = tetramino.height * (figures[tetramino_type][i] / 2);
 	}
 };
 
@@ -33,7 +33,7 @@ void t_Sprite::Move(Direction direction)
 {
 	for (int i = 0; i < 4; i++)
 	{
-		if (direction == Direction::Left)
+		if (direction == Direction::Left && stop_left)
 		{
 			coord[i].x = coord[i].x - tetramino.width;
 			if (coord[i].x <= Game::getInstance().Get_game_shape_Left_border())
@@ -44,15 +44,36 @@ void t_Sprite::Move(Direction direction)
 				}
 			}
 		}
-		if (direction == Direction::Right)
+		if (direction == Direction::Right && stop_right)
 		{
 			coord[i].x = coord[i].x + tetramino.width;
-			if (coord[i].x >= Game::getInstance().Get_game_shape_Right_border())
+			if (coord[i].x >= Game::getInstance().Get_game_shape_Right_border() - tetramino.width)
 			{
-				for (int i = 0; i < 4; i++)
+				for (int j = 0; j < 4; j++)
 				{
-					coord[i].x = coord[i].x - tetramino.width;
+					coord[j].x = coord[j].x - tetramino.width;
 				}
+			}
+		}
+		for (auto j = Game::getInstance().all_coords.begin(); j != Game::getInstance().all_coords.end(); j++)
+		{
+			if (coord[i].y == (j->second).first.y && (j->second).first.x - coord[i].x == tetramino.height)
+			{
+				stop_left = 0;
+				break;
+			}
+			else
+			{
+				stop_left = 1;
+			}
+			if (coord[i].y == (j->second).first.y && coord[i].x - (j->second).first.x == tetramino.height)
+			{
+				stop_right = 0;
+				break;
+			}
+			else
+			{
+				stop_right = 1;
 			}
 		}
 	}
@@ -64,15 +85,24 @@ void t_Sprite::Move_Down()
 	for (int i = 0; i < 4; i++)
 	{
 		coord[i].y = coord[i].y + tetramino.height;
-		if (coord[i].y >= Bottom - tetramino.height)
+		if (coord[i].y >= Bottom - tetramino.height * 2)
+			stop = true;
+		for (auto j = Game::getInstance().all_coords.begin(); j != Game::getInstance().all_coords.end(); j++)
 		{
-			for (int j = 0; j < 4; j++)
+			if (coord[i].x == (j->second).first.x && (j->second).first.y - coord[i].y == tetramino.height)
 			{
-				coord[j].y = coord[j].y - tetramino.height;
+				stop = true;
+				break;
 			}
 		}
 	}
-
+	if (stop)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			Game::getInstance().append_sprite(coord[j], tetramino);
+		}
+	}
 }
 void t_Sprite::Flip()
 {
@@ -106,7 +136,7 @@ void t_Sprite::Flip()
 		}
 	}
 }
-void t_Sprite::Draw(RenderWindow& window, int j)
+void t_Sprite::Draw(RenderWindow& window)
 {
 	for (int i = 0; i < 4; i++)
 	{

@@ -4,7 +4,7 @@
 
 using namespace sf;
 
-void Game::draw(RenderTarget& target, RenderStates states, int x, int y, int width, int height)
+void Game::draw(RenderTarget& target, RenderStates states, int x, int y, int width, int height, Font& font)
 {
 	// Рисуем рамку игрового поля
 	game_shape.setSize(Vector2f(18 * 20 + x, 18 * 40 + y));
@@ -18,12 +18,71 @@ void Game::draw(RenderTarget& target, RenderStates states, int x, int y, int wid
 	stats_shape.setSize(Vector2f(target.getSize().x - game_shape.getSize().x - game_shape.getPosition().x - 20, game_shape.getSize().y));
 	stats_shape.setPosition(game_shape.getPosition().x + game_shape.getSize().x + 10, game_shape.getPosition().y);
 	stats_shape.setOutlineThickness(2.f);
-	stats_shape.setOutlineColor(Color::Green);
+	stats_shape.setOutlineColor(Color::Blue);
 	stats_shape.setFillColor(Color::Transparent);
 	target.draw(stats_shape, states);
+	std::string str = "Points: " + std::to_string(points);
+	Text text(str, font, 22);
+	text.setFillColor(sf::Color::Cyan);
+	text.setPosition(stats_shape.getPosition().x + (stats_shape.getSize().x / 4), 30);
+	target.draw(text, states);
+
+	for (auto i = all_coords.begin(); i != all_coords.end(); i++)
+	{
+		sprite.setTextureRect((i->second).second);
+		sprite.setPosition((i->second).first.x, (i->second).first.y);
+		target.draw(sprite);
+	}
 }
 void Game::append_sprite(t_Point coord, IntRect rect)
 {
 	coords _ = std::make_pair(coord, rect);
-	all_coords.push_back(_);
+	all_coords.insert({ coord.y, _});
+}
+void Game::breaking_lines()
+{
+	/*if (all_coords[j].first.y / all_coords[j].second.width == i)
+	{
+		line_coords.push_back(all_coords[j]);
+	}
+	if (line_coords.size() == 20)
+	{
+		if (all_coords[j].first.y / 18 == i)
+		{
+			all_coords.erase(all_coords.begin() + j);
+		}
+	}
+	else
+	{
+		line_coords.clear();
+	}*/
+	for (int i = 40; i > 0; i--)
+	{
+		//auto range = all_coords.equal_range(i * all_coords[0].second.width);
+		if (all_coords.begin() != all_coords.end())
+		{
+			int width = (all_coords.begin()->second).second.width;
+ 			auto col = all_coords.count(i * width);
+			if (col == 20)
+			{
+				points += 100;
+ 				auto range = all_coords.equal_range(i * width);
+				all_coords.erase(range.first, range.second);
+
+				copy_coords = all_coords;
+				all_coords.clear();
+
+				for (auto const& j : copy_coords) {
+					tctime = it.first + 5;
+					command = it.second;
+					all_coords.insert(std::make_pair(tctime, command));
+				}
+				for (auto j = all_coords.begin(); j != lower; ++j)
+				{
+
+					(j->second).first.y += width;
+				}
+			}
+		}
+	}
 }

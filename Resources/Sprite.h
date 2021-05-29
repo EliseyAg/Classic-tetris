@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+//#include "../Game/Game.h"
 
 using namespace sf;
 
@@ -24,14 +25,17 @@ public:
 		O
 	};
 	int figures[7][4];
-
 	t_Sprite(t_Sprite::Sprite_type type, Texture &texture, int x, int y, int width, int height);
+	bool stop = false;
+	bool stop_left = 1;
+	bool stop_right = 1;
 	struct t_Point coord[4];
 	struct t_Point com;
 	Sprite sprite;
 	IntRect tetramino;
 	Sprite_type tetramino_type;
-	void Draw(RenderWindow& window, int);
+	//using coords = std::pair <t_Point, IntRect>;
+	void Draw(RenderWindow& window);
 	void Move(Direction direction);
 	void Move_Down();
 	void Flip();
