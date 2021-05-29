@@ -1,8 +1,8 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
-#include "Game/Game.h"
-#include "Resources/Sprite.h"
+#include "Game.h"
+#include "Sprite.h"
 #include "windows.h"
 #include <ctime>
 

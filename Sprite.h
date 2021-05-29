@@ -1,6 +1,5 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-//#include "../Game/Game.h"
 
 using namespace sf;
 

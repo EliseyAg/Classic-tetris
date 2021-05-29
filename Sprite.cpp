@@ -1,7 +1,7 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "Sprite.h"
-#include "../Game/Game.h"
+#include "Game.h"
 
 using namespace sf;
 

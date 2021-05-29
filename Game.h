@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <map>
-#include "../Resources/Sprite.h"
+#include "Sprite.h"
 
 using namespace sf;
 class Game

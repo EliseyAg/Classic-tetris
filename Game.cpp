@@ -21,6 +21,8 @@ void Game::draw(RenderTarget& target, RenderStates states, int x, int y, int wid
 	stats_shape.setOutlineColor(Color::Blue);
 	stats_shape.setFillColor(Color::Transparent);
 	target.draw(stats_shape, states);
+
+	//Рисуем результаты
 	std::string str = "Points: " + std::to_string(points);
 	Text text(str, font, 22);
 	text.setFillColor(sf::Color::Cyan);
@@ -41,24 +43,9 @@ void Game::append_sprite(t_Point coord, IntRect rect)
 }
 void Game::breaking_lines()
 {
-	/*if (all_coords[j].first.y / all_coords[j].second.width == i)
-	{
-		line_coords.push_back(all_coords[j]);
-	}
-	if (line_coords.size() == 20)
-	{
-		if (all_coords[j].first.y / 18 == i)
-		{
-			all_coords.erase(all_coords.begin() + j);
-		}
-	}
-	else
-	{
-		line_coords.clear();
-	}*/
 	for (int i = 40; i > 0; i--)
 	{
-		//auto range = all_coords.equal_range(i * all_coords[0].second.width);
+
 		if (all_coords.begin() != all_coords.end())
 		{
 			int width = (all_coords.begin()->second).second.width;
@@ -72,16 +59,21 @@ void Game::breaking_lines()
 				copy_coords = all_coords;
 				all_coords.clear();
 
-				for (auto const& j : copy_coords) {
-					tctime = it.first + 5;
-					command = it.second;
-					all_coords.insert(std::make_pair(tctime, command));
-				}
-				for (auto j = all_coords.begin(); j != lower; ++j)
-				{
+				coords new_coord;
+				int new_key;
 
-					(j->second).first.y += width;
+				for (auto const& j : copy_coords)
+				{
+					new_coord = j.second;
+					new_key = j.first;
+					if (new_key < (i * width))
+					{
+						new_key += width;
+						new_coord.first.y += width;
+					}
+					all_coords.insert(std::make_pair(new_key, new_coord));
 				}
+				i++;
 			}
 		}
 	}
