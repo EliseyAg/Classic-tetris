@@ -21,10 +21,10 @@ t_Sprite::t_Sprite(t_Sprite::Sprite_type type, Texture &texture, int x, int y, i
 		{3,5,7,6}, // J
 		{2,3,4,5}, // O
 	};
-
+	int t_x = (Game::getInstance().Get_game_shape_Right_border() - Game::getInstance().Get_game_shape_Left_border()) / 2 + tetramino.width;
 	for (int i = 0; i < 4; i++)
 	{
-		coord[i].x = 18 * 10 + tetramino.width * (figures[tetramino_type][i] % 2);
+		coord[i].x = tetramino.width * (figures[tetramino_type][i] % 2) + t_x - 7;
 		coord[i].y = tetramino.height * (figures[tetramino_type][i] / 2);
 	}
 };
@@ -36,7 +36,7 @@ void t_Sprite::Move(Direction direction)
 		if (direction == Direction::Left && stop_left)
 		{
 			coord[i].x = coord[i].x - tetramino.width;
-			if (coord[i].x <= Game::getInstance().Get_game_shape_Left_border())
+			if (coord[i].x <= Game::getInstance().Get_game_shape_Left_border() - tetramino.width)
 			{
 				for (int i = 0; i < 4; i++)
 				{

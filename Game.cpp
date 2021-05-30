@@ -16,7 +16,7 @@ void Game::draw(RenderTarget& target, RenderStates states, int x, int y, int wid
 
 	// Рисуем рамку с результатами
 	stats_shape.setSize(Vector2f(target.getSize().x - game_shape.getSize().x - game_shape.getPosition().x - 20, game_shape.getSize().y));
-	stats_shape.setPosition(game_shape.getPosition().x + game_shape.getSize().x + 10, game_shape.getPosition().y);
+	stats_shape.setPosition(game_shape.getPosition().x + game_shape.getSize().x + 18, game_shape.getPosition().y);
 	stats_shape.setOutlineThickness(2.f);
 	stats_shape.setOutlineColor(Color::Blue);
 	stats_shape.setFillColor(Color::Transparent);
