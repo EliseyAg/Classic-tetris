@@ -36,6 +36,17 @@ void Game::draw(RenderTarget& target, RenderStates states, int x, int y, int wid
 		target.draw(sprite);
 	}
 }
+
+void Game::load_textures(Texture& tex, Texture* background)
+{ 
+	sprite.setTexture(tex);
+	IntRect game_shape_rect(game_shape.getPosition().x, game_shape.getPosition().y, game_shape.getSize().x, game_shape.getSize().y);
+	//game_shape_rect.
+	//game_shape.setTextureRect(game_shape_rect);
+	game_shape.setTexture(background);
+}
+
+
 void Game::append_sprite(t_Point coord, IntRect rect)
 {
 	coords _ = std::make_pair(coord, rect);

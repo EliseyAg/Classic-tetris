@@ -10,7 +10,7 @@ using namespace sf;
 
 int main()
 {
-	RenderWindow window(VideoMode(640, 750), "Tetris-Classic", Style::Close);
+	RenderWindow window(VideoMode(700, 800), "Tetris-Classic", Style::Close);
 	window.setFramerateLimit(18);
 
 	Event event;
@@ -28,15 +28,16 @@ int main()
 	//m_BackgroundTexture.loadFromFile("background.jpg");
 
 	Game& tet_game = Game::getInstance();
-	Texture texture;
+	Texture texture, background;
 	texture.loadFromFile("Resources/Texture.JPG");
-	tet_game.load_texture(texture);
+	background.loadFromFile("Resources/table.png");
+	tet_game.load_textures(texture, &background);
 
 	Font font;
 	if (!font.loadFromFile("Resources/arial.ttf"))
 		return -1;
 
-	tet_game.draw(window, RenderStates::Default, 21, 21, 18, 18, font);
+	tet_game.draw(window, RenderStates::Default, 21, 19, 18, 18, font);
 	while (window.isOpen())
 	{
 		t_Sprite::Sprite_type tet_type = static_cast<t_Sprite::Sprite_type>(rand() % 7);
@@ -76,7 +77,7 @@ int main()
 			}
 			// Задаем цвет фона - белый
 			window.clear(sf::Color::White);
-			tet_game.draw(window, RenderStates::Default, 21, 21, 18, 18, font);
+			tet_game.draw(window, RenderStates::Default, 21, 19, 18, 18, font);
 			tet.Draw(window);
 			if (timer > step)
 			{

@@ -12,6 +12,7 @@ protected:
 	RectangleShape game_shape;
 	RectangleShape stats_shape;
 	Sprite sprite;
+	IntRect game_shape_rect;
 public:
 	static Game& getInstance() {
 		static Game instance;
@@ -27,5 +28,5 @@ public:
 	int Get_game_shape_Bottom_border() { return (int)(game_shape.getPosition().y + game_shape.getSize().y); };
 	void append_sprite(t_Point, IntRect);
 	void breaking_lines();
-	void load_texture(Texture& tex) { sprite.setTexture(tex); };
+	void load_textures(Texture& tex, Texture* background);
 };
