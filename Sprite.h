@@ -26,8 +26,6 @@ public:
 	int figures[7][4];
 	t_Sprite(t_Sprite::Sprite_type type, Texture &texture, int x, int y, int width, int height);
 	bool stop = false;
-	bool stop_left = 1;
-	bool stop_right = 1;
 	struct t_Point coord[4];
 	struct t_Point com;
 	Sprite sprite;

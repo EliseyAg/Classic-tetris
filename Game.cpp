@@ -60,11 +60,11 @@ void Game::breaking_lines()
 		if (all_coords.begin() != all_coords.end())
 		{
 			int width = (all_coords.begin()->second).second.width;
- 			auto col = all_coords.count(i * width);
-			if (col == 20)
+ 			auto col = all_coords.count(i * width + width);
+			if (col >= 20)
 			{
 				points += 100;
- 				auto range = all_coords.equal_range(i * width);
+ 				auto range = all_coords.equal_range(i * width + width);
 				all_coords.erase(range.first, range.second);
 
 				copy_coords = all_coords;
@@ -77,7 +77,7 @@ void Game::breaking_lines()
 				{
 					new_coord = j.second;
 					new_key = j.first;
-					if (new_key < (i * width))
+					if (new_key < (i * width + width))
 					{
 						new_key += width;
 						new_coord.first.y += width;

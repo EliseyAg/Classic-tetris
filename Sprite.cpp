@@ -24,8 +24,8 @@ t_Sprite::t_Sprite(t_Sprite::Sprite_type type, Texture &texture, int x, int y, i
 	int t_x = (Game::getInstance().Get_game_shape_Right_border() - Game::getInstance().Get_game_shape_Left_border()) / 2 + tetramino.width;
 	for (int i = 0; i < 4; i++)
 	{
-		coord[i].x = tetramino.width * (figures[tetramino_type][i] % 2) + t_x - 7;
-		coord[i].y = tetramino.height * (figures[tetramino_type][i] / 2);
+		coord[i].x = tetramino.width * (figures[tetramino_type][i] % 2) + t_x;
+		coord[i].y = tetramino.height * (figures[tetramino_type][i] / 2) + 14;
 	}
 };
 
@@ -33,10 +33,10 @@ void t_Sprite::Move(Direction direction)
 {
 	for (int i = 0; i < 4; i++)
 	{
-		if (direction == Direction::Left && stop_left)
+		if (direction == Direction::Left)
 		{
 			coord[i].x = coord[i].x - tetramino.width;
-			if (coord[i].x <= Game::getInstance().Get_game_shape_Left_border() - tetramino.width)
+			if (coord[i].x <= Game::getInstance().Get_game_shape_Left_border())
 			{
 				for (int i = 0; i < 4; i++)
 				{
@@ -44,7 +44,8 @@ void t_Sprite::Move(Direction direction)
 				}
 			}
 		}
-		if (direction == Direction::Right && stop_right)
+
+		if (direction == Direction::Right)
 		{
 			coord[i].x = coord[i].x + tetramino.width;
 			if (coord[i].x >= Game::getInstance().Get_game_shape_Right_border() - tetramino.width)
@@ -55,25 +56,18 @@ void t_Sprite::Move(Direction direction)
 				}
 			}
 		}
-		for (auto j = Game::getInstance().all_coords.begin(); j != Game::getInstance().all_coords.end(); j++)
+
+		for (auto k = Game::getInstance().all_coords.begin(); k != Game::getInstance().all_coords.end(); k++)
 		{
-			if (coord[i].y == (j->second).first.y && (j->second).first.x - coord[i].x == tetramino.height)
+			if (coord[i].y == (k->second).first.y && coord[i].x == (k->second).first.x)
 			{
-				stop_left = 0;
+				coord[i].x = coord[i].x + tetramino.width;
 				break;
 			}
-			else
+			if (coord[i].y == (k->second).first.y && coord[i].x == (k->second).first.x)
 			{
-				stop_left = 1;
-			}
-			if (coord[i].y == (j->second).first.y && coord[i].x - (j->second).first.x == tetramino.height)
-			{
-				stop_right = 0;
+				coord[i].x = coord[i].x - tetramino.width;
 				break;
-			}
-			else
-			{
-				stop_right = 1;
 			}
 		}
 	}
