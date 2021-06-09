@@ -37,12 +37,12 @@ int main()
 	if (!font.loadFromFile("Resources/arial.ttf"))
 		return -1;
 
-	tet_game.draw(window, RenderStates::Default, 14, 14, 18, 18, font);
+	tet_game.draw(window, RenderStates::Default, 10, 10, 18, 18, font);
 	while (window.isOpen())
 	{
+		step = 0.3;
 		t_Sprite::Sprite_type tet_type = static_cast<t_Sprite::Sprite_type>(rand() % 7);
 		t_Sprite tet = t_Sprite(tet_type, texture, rand() % 7 * 18, 0, 18, 18);
-		step = 0.3;
 
 		while (!tet.stop)
 		{
@@ -77,14 +77,16 @@ int main()
 			}
 			// Задаем цвет фона - белый
 			window.clear(sf::Color::White);
-			tet_game.draw(window, RenderStates::Default, 14, 14, 18, 18, font);
+			tet_game.draw(window, RenderStates::Default, 10, 10, 18, 18, font);
 			tet.Draw(window);
+
+			window.display();
+
 			if (timer > step)
 			{
 				tet.Move_Down();
 				timer = 0;
 			}
-			window.display();
 		}
 		tet_game.breaking_lines();
 	}
