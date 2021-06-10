@@ -26,7 +26,7 @@ void Game::draw(RenderTarget& target, RenderStates states, int x, int y, int wid
 	std::string str = "Points: " + std::to_string(points);
 	Text text(str, font, 22);
 	text.setFillColor(sf::Color::Cyan);
-	text.setPosition(stats_shape.getPosition().x + (stats_shape.getSize().x / 4), 30);
+	text.setPosition(stats_shape.getPosition().x + (stats_shape.getSize().x / 4), stats_shape.getPosition().y + stats_shape.getSize().y / 20);
 	target.draw(text, states);
 
 	for (auto i = all_coords.begin(); i != all_coords.end(); i++)

@@ -11,16 +11,6 @@ t_Sprite::t_Sprite(t_Sprite::Sprite_type type, Texture &texture, int x, int y, i
 	tetramino_type = type;
 	tetramino = IntRect(x, y, width, height);
 
-	int figures[7][4] =
-	{
-		{2,4,6,8}, // I
-		{2,4,5,7}, // Z
-		{3,5,4,6}, // S
-		{3,5,4,7}, // T
-		{2,3,5,7}, // L
-		{3,5,7,6}, // J
-		{2,3,4,5}  // O
-	};
 	int t_x = (Game::getInstance().Get_game_shape_Right_border() - Game::getInstance().Get_game_shape_Left_border()) / 2 + Game::getInstance().Get_game_shape_Left_border();
 	int t_y = Game::getInstance().Get_game_shape_Top_border();
 	for (int i = 0; i < 4; i++)
@@ -117,6 +107,7 @@ void t_Sprite::Flip()
 		}
 	}
 }
+
 void t_Sprite::Draw(RenderWindow& window)
 {
 	for (int i = 0; i < 4; i++)
@@ -128,3 +119,31 @@ void t_Sprite::Draw(RenderWindow& window)
 		window.draw(sprite);
 	}
 };
+
+void t_Sprite::Draw(RenderWindow& window, Vector2f vec)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		coord[i].x = tetramino.width * (figures[tetramino_type][i] % 2) + vec.x;
+		coord[i].y = tetramino.height * (figures[tetramino_type][i] / 2) + vec.y;
+		sprite.setTextureRect(tetramino);
+		sprite.setPosition(coord[i].x, coord[i].y);
+		window.draw(sprite);
+	}
+};
+
+t_Sprite & t_Sprite::operator=(t_Sprite const& a)
+{
+	sprite = a.sprite;
+	tetramino_type = a.tetramino_type;
+	tetramino = a.tetramino;
+	int t_x = (Game::getInstance().Get_game_shape_Right_border() - Game::getInstance().Get_game_shape_Left_border()) / 2 + Game::getInstance().Get_game_shape_Left_border();
+	int t_y = Game::getInstance().Get_game_shape_Top_border();
+	for (int i = 0; i < 4; i++)
+	{
+		coord[i].x = tetramino.width * (figures[tetramino_type][i] % 2) + t_x;
+		coord[i].y = tetramino.height * (figures[tetramino_type][i] / 2) + t_y - tetramino.height;
+	}
+	stop = false;
+	return *this;
+}

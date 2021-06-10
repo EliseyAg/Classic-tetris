@@ -10,8 +10,10 @@ using namespace sf;
 
 int main()
 {
-	RenderWindow window(VideoMode(700, 800), "Tetris-Classic", Style::Close);
+	RenderWindow window(VideoMode(700, 760), "Tetris-Classic", Style::Close);
 	window.setFramerateLimit(18);
+
+	bool pause = false;
 
 	Event event;
 	Music music;
@@ -36,13 +38,14 @@ int main()
 	Font font;
 	if (!font.loadFromFile("Resources/arial.ttf"))
 		return -1;
-
 	tet_game.draw(window, RenderStates::Default, 10, 10, 18, 18, font);
+	t_Sprite::Sprite_type tet_type = static_cast<t_Sprite::Sprite_type>(rand() % 7);
+	t_Sprite tet = t_Sprite(tet_type, texture, rand() % 7 * 18, 0, 18, 18);
 	while (window.isOpen())
 	{
 		step = 0.3;
-		t_Sprite::Sprite_type tet_type = static_cast<t_Sprite::Sprite_type>(rand() % 7);
-		t_Sprite tet = t_Sprite(tet_type, texture, rand() % 7 * 18, 0, 18, 18);
+		tet_type = static_cast<t_Sprite::Sprite_type>(rand() % 7);
+		t_Sprite pre_tet = t_Sprite(tet_type, texture, rand() % 7 * 18, 0, 18, 18);
 
 		while (!tet.stop)
 		{
@@ -73,23 +76,38 @@ int main()
 					{
 						tet.Flip();
 					}
+					if (event.key.code == sf::Keyboard::P)
+					{
+						pause = !pause;
+						break;
+					}
 				}
 			}
-			// Задаем цвет фона - белый
-			window.clear(sf::Color::White);
-			tet_game.draw(window, RenderStates::Default, 10, 10, 18, 18, font);
-			tet.Draw(window);
-
-			window.display();
-
-			if (timer > step)
+			if (!pause)
 			{
-				tet.Move_Down();
-				timer = 0;
+				// Задаем цвет фона - белый
+				window.clear(sf::Color::White);
+				tet_game.draw(window, RenderStates::Default, 10, 10, 18, 18, font);
+				tet.Draw(window);
+				pre_tet.Draw(window, tet_game.Get_stats_shape_position());
+				window.display();
+
+				if (timer > step)
+				{
+					tet.Move_Down();
+					timer = 0;
+				}
 			}
+			else
+			{
+				
+			}
+			//auto range = Game::getInstance().all_coords.equal_range(0);
+			//auto end = range.second;
+			//if (end.second == )
 		}
 		tet_game.breaking_lines();
+		tet = pre_tet;
 	}
-	Sleep(1000);
-return 0;
+	return 0;
 }
