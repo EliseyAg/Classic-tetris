@@ -15,12 +15,20 @@ void Game::draw(RenderTarget& target, RenderStates states, int x, int y, int wid
 	target.draw(game_shape, states);
 
 	// Рисуем рамку с результатами
-	stats_shape.setSize(Vector2f(target.getSize().x - game_shape.getSize().x - game_shape.getPosition().x - 20, game_shape.getSize().y));
+	stats_shape.setSize(Vector2f(180, 40));
 	stats_shape.setPosition(game_shape.getPosition().x + game_shape.getSize().x + x, game_shape.getPosition().y);
 	stats_shape.setOutlineThickness(2.f);
 	stats_shape.setOutlineColor(Color::Blue);
 	stats_shape.setFillColor(Color::Transparent);
 	target.draw(stats_shape, states);
+
+	// Рисуем рамку с новым тетрамино
+	pre_tet_shape.setSize(Vector2f(180, 81));
+	pre_tet_shape.setPosition(game_shape.getPosition().x + game_shape.getSize().x + x, 108);
+	pre_tet_shape.setOutlineThickness(2.f);
+	pre_tet_shape.setOutlineColor(Color::Green);
+	pre_tet_shape.setFillColor(Color::Transparent);
+	target.draw(pre_tet_shape, states);
 
 	//Рисуем результаты
 	std::string str = "Points: " + std::to_string(points);
@@ -28,6 +36,13 @@ void Game::draw(RenderTarget& target, RenderStates states, int x, int y, int wid
 	text.setFillColor(sf::Color::Cyan);
 	text.setPosition(stats_shape.getPosition().x + (stats_shape.getSize().x / 4), stats_shape.getPosition().y + stats_shape.getSize().y / 20);
 	target.draw(text, states);
+
+	//Рисуем next:
+	std::string str2 = "Next:";
+	Text text2(str2, font, 22);
+	text2.setFillColor(sf::Color::Green);
+	text2.setPosition(pre_tet_shape.getPosition().x + (pre_tet_shape.getSize().x / 6), pre_tet_shape.getPosition().y);
+	target.draw(text2, states);
 
 	for (auto i = all_coords.begin(); i != all_coords.end(); i++)
 	{

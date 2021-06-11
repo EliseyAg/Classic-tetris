@@ -11,6 +11,7 @@ private:
 protected:
 	RectangleShape game_shape;
 	RectangleShape stats_shape;
+	RectangleShape pre_tet_shape;
 	Sprite sprite;
 	IntRect game_shape_rect;
 public:

@@ -6,7 +6,7 @@ using namespace sf;
 class Menu
 {
 public:
-	Menu();
+	Menu(Texture& texture_menu);
 	Sprite menu;
 	int menu_x;
 	int menu_y;

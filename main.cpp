@@ -5,6 +5,7 @@
 #include "Sprite.h"
 #include "windows.h"
 #include <ctime>
+#include "Menu.h"
 
 using namespace sf;
 
@@ -41,6 +42,10 @@ int main()
 	tet_game.draw(window, RenderStates::Default, 10, 10, 18, 18, font);
 	t_Sprite::Sprite_type tet_type = static_cast<t_Sprite::Sprite_type>(rand() % 7);
 	t_Sprite tet = t_Sprite(tet_type, texture, rand() % 7 * 18, 0, 18, 18);
+
+	Texture texture_menu;
+	texture_menu.loadFromFile("Resources/Menu.png");
+	Menu tet_menu = Menu(texture_menu);
 	while (window.isOpen())
 	{
 		step = 0.3;
@@ -90,7 +95,6 @@ int main()
 				tet_game.draw(window, RenderStates::Default, 10, 10, 18, 18, font);
 				tet.Draw(window);
 				pre_tet.Draw(window, tet_game.Get_stats_shape_position());
-				window.display();
 
 				if (timer > step)
 				{
@@ -100,11 +104,12 @@ int main()
 			}
 			else
 			{
-				
+				tet_menu.Draw(window);
 			}
 			//auto range = Game::getInstance().all_coords.equal_range(0);
 			//auto end = range.second;
 			//if (end.second == )
+			window.display();
 		}
 		tet_game.breaking_lines();
 		tet = pre_tet;

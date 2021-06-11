@@ -125,7 +125,7 @@ void t_Sprite::Draw(RenderWindow& window, Vector2f vec)
 	for (int i = 0; i < 4; i++)
 	{
 		coord[i].x = tetramino.width * (figures[tetramino_type][i] % 2) + vec.x + 108;
-		coord[i].y = tetramino.height * (figures[tetramino_type][i] / 2) + vec.y + 180;
+		coord[i].y = tetramino.height * (figures[tetramino_type][i] / 2) + vec.y + 90;
 		sprite.setTextureRect(tetramino);
 		sprite.setPosition(coord[i].x, coord[i].y);
 		window.draw(sprite);
