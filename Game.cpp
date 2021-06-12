@@ -11,7 +11,7 @@ void Game::draw(RenderTarget& target, RenderStates states, int x, int y, int wid
 	game_shape.setPosition(x, y);
 	game_shape.setOutlineThickness(2.f);
 	game_shape.setOutlineColor(Color::Red);
-	game_shape.setFillColor(Color::Transparent);
+	//game_shape.setFillColor(Color::Transparent);
 	target.draw(game_shape, states);
 
 	// Рисуем рамку с результатами
@@ -23,7 +23,7 @@ void Game::draw(RenderTarget& target, RenderStates states, int x, int y, int wid
 	target.draw(stats_shape, states);
 
 	// Рисуем рамку с новым тетрамино
-	pre_tet_shape.setSize(Vector2f(180, 81));
+	pre_tet_shape.setSize(Vector2f(180, 90));
 	pre_tet_shape.setPosition(game_shape.getPosition().x + game_shape.getSize().x + x, 108);
 	pre_tet_shape.setOutlineThickness(2.f);
 	pre_tet_shape.setOutlineColor(Color::Green);
