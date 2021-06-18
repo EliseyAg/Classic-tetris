@@ -14,3 +14,14 @@ void Menu::Draw(RenderWindow& window)
 	menu.setPosition(menu_x, menu_y);
 	window.draw(menu);
 }
+Main_Menu::Main_Menu(Texture& texture_main_menu)
+{
+	main_menu = Sprite(texture_main_menu);
+
+	new_game = false;
+}
+void Main_Menu::Draw(RenderWindow& window)
+{
+	main_menu.setPosition(0, 0);
+	window.draw(main_menu);
+}
