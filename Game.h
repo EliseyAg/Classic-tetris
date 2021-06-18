@@ -29,7 +29,6 @@ public:
 	int Get_game_shape_Bottom_border() { return (int)(game_shape.getPosition().y + game_shape.getSize().y); };
 	int Get_game_shape_Top_border() { return (int)(game_shape.getPosition().y); };
 	Vector2f Get_stats_shape_position() { return stats_shape.getPosition(); };
-	Vector2f Get_game_shape_position() { return game_shape.getPosition(); };
 	void append_sprite(t_Point, IntRect);
 	void breaking_lines();
 	void load_textures(Texture& tex, Texture* background);

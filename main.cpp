@@ -46,17 +46,12 @@ int main()
 	Texture texture_menu;
 	texture_menu.loadFromFile("Resources/Menu.png");
 	Menu tet_menu = Menu(texture_menu);
-	Texture texture_main_menu;
-	Texture texture_new_game_button;
-	texture_main_menu.loadFromFile("Resources/Main_Menu.png");
-	texture_new_game_button.loadFromFile("Resources/New_Game.png");
-	Main_Menu tet_main_menu = Main_Menu(texture_main_menu);
-	Mouse::Button tet_new_game_button;
 	while (window.isOpen())
 	{
 		step = 0.3;
 		tet_type = static_cast<t_Sprite::Sprite_type>(rand() % 7);
 		t_Sprite pre_tet = t_Sprite(tet_type, texture, rand() % 7 * 18, 0, 18, 18);
+
 		while (!tet.stop)
 		{
 			float time = clock.getElapsedTime().asSeconds();
@@ -117,11 +112,6 @@ int main()
 			window.display();
 		}
 		tet_game.breaking_lines();
-		std::cout << (tet_game.Get_game_shape_position().y) << std::endl;
-		if (Game::getInstance().all_coords.find((tet_game.Get_game_shape_position().y + 18)) != Game::getInstance().all_coords.end())
-		{
-			break;
-		}
 		tet = pre_tet;
 	}
 	return 0;
