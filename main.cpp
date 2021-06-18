@@ -113,6 +113,11 @@ int main()
 		}
 		tet_game.breaking_lines();
 		tet = pre_tet;
+		std::cout << (tet_game.Get_game_shape_position().y) << std::endl;
+		if (Game::getInstance().all_coords.find((tet_game.Get_game_shape_position().y + 18)) != Game::getInstance().all_coords.end())
+		{
+			break;
+		}
 	}
 	return 0;
 }
