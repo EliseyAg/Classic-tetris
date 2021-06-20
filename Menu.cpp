@@ -17,11 +17,24 @@ void Menu::Draw(RenderWindow& window)
 Main_Menu::Main_Menu(Texture& texture_main_menu)
 {
 	main_menu = Sprite(texture_main_menu);
-
-	new_game = false;
 }
 void Main_Menu::Draw(RenderWindow& window)
 {
 	main_menu.setPosition(0, 0);
 	window.draw(main_menu);
+}
+tet_Button::tet_Button(Texture* texture_button, int b_x, int b_y)
+{
+	x = b_x;
+	y = b_y;
+	isBack = false;
+	button.setSize(Vector2f(200, 100));
+	button.setPosition(x, y);
+	button.setOutlineThickness(2.f);
+	button.setOutlineColor(Color::Red);
+	button.setTexture(texture_button);
+}
+void tet_Button::Draw(RenderTarget& target, RenderStates states)
+{
+	target.draw(button, states);
 }

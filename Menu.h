@@ -17,6 +17,15 @@ class Main_Menu
 public:
 	Main_Menu(Texture& texture_main_menu);
 	Sprite main_menu;
-	bool new_game;
 	void Draw(RenderWindow& window);
+};
+class tet_Button
+{
+public:
+	tet_Button(Texture* texture_button, int, int);
+	int x;
+	int y;
+	bool isBack;
+	RectangleShape button;
+	void Draw(RenderTarget& target, RenderStates states);
 };
