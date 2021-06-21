@@ -3,9 +3,12 @@
 #include <SFML/Audio.hpp>
 #include "Game.h"
 #include "Sprite.h"
-#include "windows.h"
 #include <ctime>
 #include "Menu.h"
+
+#ifndef LINUX
+  #include "windows.h"
+#endif
 
 using namespace sf;
 
