@@ -166,15 +166,14 @@ int main()
 						{
 							tet_game.breaking_lines();
 							tet = pre_tet;
-							std::cout << (tet_game.Get_game_shape_position().y) << std::endl;
-							//if (Game::getInstance().all_coords.find((tet_game.Get_game_shape_position().y + 18)) != Game::getInstance().all_coords.end())
-							//{
-							//	while (true)
-							//	{
-							//		window.clear(sf::Color::White);
-							//		tet_main_menu.Draw(window);
-							//	}
-							//}
+							if (Game::getInstance().all_coords.find((tet_game.Get_game_shape_position().y + 18)) != Game::getInstance().all_coords.end())
+							{
+								tet_back_to_menu_button.isBack = true;
+								music.stop();
+								window.clear(sf::Color::White);
+								Game::getInstance().all_coords.clear();
+								break;
+							}
 						}
 					}
 				}
