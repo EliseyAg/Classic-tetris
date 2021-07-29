@@ -14,7 +14,7 @@ using namespace sf;
 
 int main()
 {
-	RenderWindow window(VideoMode(700, 760), "Tetris-Classic", Style::Close);
+	RenderWindow window(VideoMode(700, 760), "Tetris-Classic");
 	window.setFramerateLimit(18);
 
 	bool pause = false;
@@ -28,13 +28,12 @@ int main()
 	srand(time(0));
 	
 	// Часы (таймер)
-	float timer = 0, step = 0.3;
+	float down_timer = 0, flip_timer = 0, down_step = 0.3, down_step_ = 0.3, flip_step = down_step;
 	Clock clock;
-	//m_BackgroundTexture.loadFromFile("background.jpg");
 
 	Game& tet_game = Game::getInstance();
 	Texture texture, background;
-	texture.loadFromFile("Resources/Texture.JPG");
+	texture.loadFromFile("Resources/Texture_18x18.JPG");
 	background.loadFromFile("Resources/table.png");
 	tet_game.load_textures(texture, &background);
 
@@ -86,9 +85,10 @@ int main()
 				{
 					tet_back_to_menu_button.isBack = false;
 					music.play();
+					down_step = 0.3;
 					while (!tet_back_to_menu_button.isBack)
 					{
-						step = 0.3;
+						down_step = down_step_;
 						tet_type = static_cast<t_Sprite::Sprite_type>(rand() % 7);
 						t_Sprite pre_tet = t_Sprite(tet_type, texture, rand() % 7 * 18, 0, 18, 18);
 
@@ -96,34 +96,44 @@ int main()
 						{
 							float time = clock.getElapsedTime().asSeconds();
 							clock.restart();
-							timer += time;
+							down_timer += time;
+							flip_timer += time;
 
-							while (window.pollEvent(event))
+							if (window.pollEvent(event))
 							{
 								if (event.type == sf::Event::Closed) window.close();
+								// Получаем нажатую клавишу - выполняем соответствующее действие
 								if (event.type == sf::Event::KeyPressed)
 								{
-									// Получаем нажатую клавишу - выполняем соответствующее действие
-									if (event.key.code == sf::Keyboard::Escape) window.close();
-									if (event.key.code == sf::Keyboard::Left)
+									switch (event.key.code)
 									{
+									case sf::Keyboard::Escape:
+										window.close();
+										break;
+									case sf::Keyboard::Left:
 										tet.Move(Direction::Left);
-									}
-									if (event.key.code == sf::Keyboard::Right)
-									{
+										break;
+									case sf::Keyboard::Right:
 										tet.Move(Direction::Right);
-									}
-									if (event.key.code == sf::Keyboard::Down)
-									{
-										step = 0.05;
-									}
-									if (event.key.code == sf::Keyboard::Space)
-									{
-										tet.Flip();
-									}
-									if (event.key.code == sf::Keyboard::P)
-									{
+										break;
+									case sf::Keyboard::Down:
+										down_step = 0.05;
+										break;
+									case sf::Keyboard::Space:
+										if (flip_timer > flip_step)
+										{
+											tet.Flip();
+											flip_timer = 0;
+										}
+										break;
+									case sf::Keyboard::P:
 										pause = !pause;
+										if (pause)
+											down_step = 0.0;
+										else
+											down_step = down_step_;
+										break;
+									default:
 										break;
 									}
 								}
@@ -136,10 +146,10 @@ int main()
 								tet.Draw(window);
 								pre_tet.Draw(window, tet_game.Get_stats_shape_position());
 
-								if (timer > step)
+								if (down_timer > down_step)
 								{
 									tet.Move_Down();
-									timer = 0;
+									down_timer = 0;
 								}
 							}
 							else
@@ -178,6 +188,7 @@ int main()
 								break;
 							}
 						}
+						down_step_ -= 0.01;
 					}
 				}
 			}

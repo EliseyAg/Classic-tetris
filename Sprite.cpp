@@ -96,6 +96,7 @@ void t_Sprite::Flip()
 				{
 					coord[j].x = coord[j].x - tetramino.width;
 				}
+				//break;
 			}
 			if (coord[i].x < left)
 			{
@@ -103,6 +104,7 @@ void t_Sprite::Flip()
 				{
 					coord[j].x = coord[j].x + tetramino.width;
 				}
+				//break;
 			}
 		}
 	}
